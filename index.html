@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATELIER — Estudio de Arquitectura, Chota</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tierra:#C2895A;
+    --piedra:#6B6459;
+    --musgo:#3F5039;
+    --neblina:#EEE8DB;
+    --neblina-alta:#F6F2E9;
+    --teja:#8B4226;
+    --carbon:#2B2620;
+    --linea: rgba(43,38,32,0.14);
+    --serif: 'Fraunces', serif;
+    --sans: 'Work Sans', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--neblina);
+    color:var(--carbon);
+    font-family:var(--sans);
+    font-weight:400;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0;color:var(--carbon);}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teja);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:1px;background:var(--teja);
+    display:inline-block;
+  }
+  :focus-visible{outline:2px solid var(--teja);outline-offset:3px;}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(238,232,219,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--linea);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 0;
+  }
+  .brand{
+    font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:0.01em;
+    display:flex;flex-direction:column;line-height:1.05;
+  }
+  .brand span{
+    font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:0.1em;
+    color:var(--piedra);text-transform:uppercase;margin-top:3px;
+  }
+  nav.links{display:flex;gap:34px;list-style:none;}
+  nav.links a{
+    font-size:14px;text-decoration:none;color:var(--carbon);
+    position:relative;padding-bottom:4px;
+  }
+  nav.links a::after{
+    content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--teja);
+    transition:width .25s ease;
+  }
+  nav.links a:hover::after{width:100%;}
+  .nav-cta{
+    font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    border:1px solid var(--carbon);padding:9px 16px;text-decoration:none;
+    transition:background .2s ease,color .2s ease;
+  }
+  .nav-cta:hover{background:var(--carbon);color:var(--neblina-alta);}
+  .menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .menu-btn span{display:block;width:22px;height:1.5px;background:var(--carbon);margin:5px 0;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:86px 0 110px;
+    border-bottom:1px solid var(--linea);
+  }
+  .hero-contours{
+    position:absolute;inset:0;z-index:0;opacity:0.55;
+    pointer-events:none;
+  }
+  .hero .wrap{position:relative;z-index:1;}
+  .hero-grid{
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:end;
+  }
+  .hero h1{
+    font-size:clamp(38px,5.2vw,66px);
+    line-height:1.04;
+    letter-spacing:-0.01em;
+    max-width:12ch;
+  }
+  .hero h1 em{font-style:italic;color:var(--teja);font-weight:400;}
+  .hero p.lead{
+    font-size:17px;color:var(--carbon);opacity:0.82;max-width:46ch;margin-top:22px;
+  }
+  .hero-side{
+    font-family:var(--mono);font-size:12.5px;color:var(--piedra);
+    border-left:1px solid var(--linea);padding-left:22px;
+  }
+  .hero-side p{margin:0 0 14px;}
+  .hero-side strong{color:var(--carbon);font-weight:500;}
+  .cta-row{display:flex;gap:16px;margin-top:34px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--teja);color:var(--neblina-alta);text-decoration:none;
+    font-family:var(--mono);font-size:13px;letter-spacing:.05em;text-transform:uppercase;
+    padding:14px 26px;transition:background .2s ease;
+  }
+  .btn-primary:hover{background:#6f3319;}
+  .btn-ghost{
+    text-decoration:none;color:var(--carbon);
+    font-family:var(--mono);font-size:13px;letter-spacing:.05em;text-transform:uppercase;
+    padding:14px 6px;border-bottom:1px solid var(--carbon);
+  }
+
+  /* ---------- marquee ---------- */
+  .marquee{
+    border-bottom:1px solid var(--linea);
+    background:var(--neblina-alta);
+    overflow:hidden;white-space:nowrap;
+    padding:16px 0;
+  }
+  .marquee-track{
+    display:inline-flex;gap:36px;
+    animation:scroll 32s linear infinite;
+    font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--piedra);
+    text-transform:uppercase;
+  }
+  .marquee-track span.sep{color:var(--tierra);}
+  @keyframes scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  /* ---------- section shell ---------- */
+  section{padding:96px 0;border-bottom:1px solid var(--linea);}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+    margin-bottom:52px;flex-wrap:wrap;
+  }
+  .section-head h2{font-size:clamp(28px,3.4vw,40px);max-width:16ch;}
+  .section-head p{max-width:34ch;font-size:14.5px;color:var(--piedra);margin:0;}
+
+  /* ---------- servicios ---------- */
+  .servicios-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--linea);border:1px solid var(--linea);
+  }
+  .servicio-card{
+    background:var(--neblina-alta);padding:34px 26px;
+    display:flex;flex-direction:column;gap:18px;min-height:190px;
+    transition:background .25s ease;
+  }
+  .servicio-card:hover{background:#fff;}
+  .servicio-card svg{width:34px;height:34px;stroke:var(--teja);stroke-width:1.4;fill:none;}
+  .servicio-card h3{font-size:16.5px;font-weight:500;font-family:var(--sans);}
+  .servicio-card p{font-size:13px;color:var(--piedra);margin:0;line-height:1.45;}
+
+  /* ---------- enfoque ---------- */
+  .enfoque-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+  .enfoque-text p{font-size:16.5px;line-height:1.7;color:var(--carbon);opacity:0.88;margin:0 0 18px;}
+  .enfoque-text p:first-child{font-family:var(--serif);font-size:22px;font-style:italic;opacity:1;color:var(--musgo);}
+  .materiales{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .material{
+    border:1px solid var(--linea);padding:20px;background:var(--neblina-alta);
+  }
+  .swatch{width:100%;height:64px;margin-bottom:14px;}
+  .material h4{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;color:var(--carbon);}
+  .material p{font-size:12.5px;color:var(--piedra);margin:0;}
+
+  /* ---------- proyectos ---------- */
+  .proyectos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .proyecto-card{
+    border:1px solid var(--linea);background:var(--neblina-alta);
+    display:flex;flex-direction:column;
+  }
+  .proyecto-visual{
+    height:190px;position:relative;overflow:hidden;
+    background:linear-gradient(160deg,#e4dccb,#d8cdb6);
+  }
+  .proyecto-visual svg{position:absolute;inset:0;width:100%;height:100%;opacity:0.5;}
+  .proyecto-info{padding:20px 22px;}
+  .proyecto-info .tag{font-family:var(--mono);font-size:11px;color:var(--teja);letter-spacing:.05em;text-transform:uppercase;}
+  .proyecto-info h3{font-size:18px;margin:8px 0 6px;font-weight:500;font-family:var(--serif);}
+  .proyecto-info p{font-size:13px;color:var(--piedra);margin:0;}
+
+  /* ---------- sobre ---------- */
+  .sobre-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;}
+  .sobre-grid h2{font-size:clamp(26px,3vw,36px);margin-bottom:22px;}
+  .sobre-grid p{font-size:15.5px;color:var(--carbon);opacity:0.85;line-height:1.7;margin:0 0 16px;}
+  .stat-row{display:flex;gap:40px;margin-top:28px;flex-wrap:wrap;}
+  .stat b{display:block;font-family:var(--serif);font-size:32px;color:var(--teja);font-weight:500;}
+  .stat span{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--piedra);text-transform:uppercase;}
+
+  /* ---------- contacto ---------- */
+  .contacto{background:var(--musgo);color:var(--neblina-alta);}
+  .contacto .eyebrow{color:#C7D6C2;}
+  .contacto .eyebrow::before{background:#C7D6C2;}
+  .contacto h2{color:var(--neblina-alta);}
+  .contacto-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+  .contacto-info p{font-size:15px;opacity:0.86;line-height:1.7;max-width:38ch;}
+  .contacto-info .coords{font-family:var(--mono);font-size:13px;opacity:0.7;margin-top:24px;}
+  form{display:flex;flex-direction:column;gap:16px;}
+  .field label{
+    font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+    display:block;margin-bottom:7px;opacity:0.8;
+  }
+  .field input,.field select,.field textarea{
+    width:100%;background:transparent;border:none;border-bottom:1px solid rgba(246,242,233,0.4);
+    color:var(--neblina-alta);font-family:var(--sans);font-size:15px;padding:9px 2px;
+  }
+  .field select option{color:var(--carbon);}
+  .field input::placeholder,.field textarea::placeholder{color:rgba(246,242,233,0.45);}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-bottom-color:var(--tierra);}
+  .field textarea{resize:vertical;min-height:80px;}
+  .submit-btn{
+    margin-top:8px;align-self:flex-start;
+    background:var(--neblina-alta);color:var(--musgo);
+    font-family:var(--mono);font-size:13px;letter-spacing:.05em;text-transform:uppercase;
+    padding:14px 28px;border:none;cursor:pointer;transition:background .2s ease;
+  }
+  .submit-btn:hover{background:var(--tierra);color:var(--neblina-alta);}
+
+  /* ---------- footer ---------- */
+  footer{padding:36px 0;}
+  .footer-row{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+    font-family:var(--mono);font-size:12px;color:var(--piedra);text-transform:uppercase;letter-spacing:.04em;
+  }
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .marquee-track{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-side{border-left:none;padding-left:0;border-top:1px solid var(--linea);padding-top:18px;margin-top:8px;}
+    .servicios-grid{grid-template-columns:repeat(2,1fr);}
+    .enfoque-grid,.sobre-grid,.contacto-grid{grid-template-columns:1fr;gap:36px;}
+    .proyectos-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){
+    nav.links,.nav-cta{display:none;}
+    .menu-btn{display:block;}
+    .servicios-grid,.proyectos-grid{grid-template-columns:1fr;}
+    .stat-row{gap:24px;}
+    .wrap{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">ATELIER<span>Arquitectura &amp; interiores — Chota</span></div>
+    <ul class="links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#enfoque">Enfoque</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#estudio">Estudio</a></li>
+    </ul>
+    <a class="nav-cta" href="#contacto">Escríbenos</a>
+    <button class="menu-btn" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="hero-contours" viewBox="0 0 1200 500" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M-50,420 C200,380 350,460 600,410 C850,360 950,440 1250,400" fill="none" stroke="#6B6459" stroke-width="1"/>
+    <path d="M-50,450 C220,410 380,480 600,440 C820,400 980,470 1250,430" fill="none" stroke="#6B6459" stroke-width="1"/>
+    <path d="M-50,340 C180,290 330,370 600,320 C870,270 980,350 1250,300" fill="none" stroke="#C2895A" stroke-width="1"/>
+    <path d="M-50,300 C200,250 340,320 600,280 C860,240 970,310 1250,260" fill="none" stroke="#C2895A" stroke-width="1"/>
+    <path d="M-50,255 C210,210 330,270 600,235 C850,200 960,265 1250,220" fill="none" stroke="#8B4226" stroke-width="1"/>
+  </svg>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">2 388 m s.n.m. — Chota, Cajamarca</div>
+        <h1>Diseñamos casas que ya conocen<em> el frío de la sierra</em></h1>
+        <p class="lead">Estudio de arquitectura y diseño de interiores en Chota. Trabajamos casas de campo, casas de ciudad y locales comerciales, y bajamos al detalle de cada ambiente: habitaciones, salas, comedores y baños.</p>
+        <div class="cta-row">
+          <a class="btn-primary" href="#contacto">Cuéntanos tu proyecto</a>
+          <a class="btn-ghost" href="#proyectos">Ver proyectos</a>
+        </div>
+      </div>
+      <div class="hero-side">
+        <p><strong>Con quién trabajamos.</strong> Familias que construyen en el campo, familias que construyen en la ciudad, y negocios que necesitan un local bien pensado.</p>
+        <p><strong>Cómo trabajamos.</strong> De la fachada al grifo del baño: un solo equipo acompaña todo el proyecto, sin tramitar por separado cada ambiente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Casas de campo</span><span class="sep">/</span>
+    <span>Casas de ciudad</span><span class="sep">/</span>
+    <span>Tiendas</span><span class="sep">/</span>
+    <span>Habitaciones</span><span class="sep">/</span>
+    <span>Salas</span><span class="sep">/</span>
+    <span>Comedores</span><span class="sep">/</span>
+    <span>Baños</span><span class="sep">/</span>
+    <span>Casas de campo</span><span class="sep">/</span>
+    <span>Casas de ciudad</span><span class="sep">/</span>
+    <span>Tiendas</span><span class="sep">/</span>
+    <span>Habitaciones</span><span class="sep">/</span>
+    <span>Salas</span><span class="sep">/</span>
+    <span>Comedores</span><span class="sep">/</span>
+    <span>Baños</span><span class="sep">/</span>
+  </div>
+</div>
+
+<section id="servicios">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Del plano al detalle</div>
+        <h2>Un proyecto completo, ambiente por ambiente</h2>
+      </div>
+      <p>No solo entregamos un plano de fachada: acompañamos cada espacio de la casa o el local hasta el último acabado.</p>
+    </div>
+    <div class="servicios-grid reveal">
+      <div class="servicio-card">
+        <svg viewBox="0 0 40 40"><path d="M6 20 L20 8 L34 20 M10 18V32H30V18" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 32V24H18V32" stroke-linecap="round"/><path d="M27 12 L27 8 L31 8 L31 15" stroke-linecap="round"/></svg>
+        <h3>Casas de campo</h3>
+        <p>Viviendas pensadas para el terreno, el viento y la distancia a la carretera más cercana.</p>
+      </div>
+      <div class="servicio-card">
+        <svg viewBox="0 0 40 40"><rect x="9" y="12" width="22" height="22" stroke-linejoin="round"/><path d="M14 34V26H26V34" stroke-linecap="round"/><path d="M13 18H17M23 18H27M13 22H17M23 22H27" stroke-linecap="round"/></svg>
+        <h3>Casas de ciudad</h3>
+        <p>Lotes angostos, medianeras y normativa municipal resueltos sin perder luz ni espacio.</p>
+      </div>
+      <div class="servicio-card">
+        <svg viewBox="0 0 40 40"><path d="M6 15 L8 8 H32 L34 15" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 15 V32 H34 V15" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 32V22H23V32" stroke-linecap="round"/></svg>
+        <h3>Diseño de tiendas</h3>
+        <p>Fachadas comerciales y distribución de local que hacen que el cliente entre y se quede.</p>
+      </div>
+      <div class="servicio-card">
+        <svg viewBox="0 0 40 40"><path d="M6 24H34V32H6Z" stroke-linejoin="round"/><path d="M6 24V19C6 17 8 16 10 16H30C32 16 34 17 34 19V24" stroke-linecap="round"/><path d="M6 32V35M34 32V35" stroke-linecap="round"/></svg>
+        <h3>Habitaciones</h3>
+        <p>Descanso, guardado y luz natural bien repartidos, incluso en cuartos pequeños.</p>
+      </div>
+      <div class="servicio-card">
+        <svg viewBox="0 0 40 40"><path d="M8 26V16C8 14 10 13 12 13H16C18 13 19 14 19 16" stroke-linecap="round"/><path d="M21 26V16C21 14 22 13 24 13H28C30 13 32 14 32 16V26" stroke-linecap="round"/><path d="M6 26H34V31H6Z" stroke-linejoin="round"/><path d="M8 31V34M32 31V34" stroke-linecap="round"/></svg>
+        <h3>Salas</h3>
+        <p>Espacios de estar que ordenan la vida diaria de la familia y reciben visitas con orgullo.</p>
+      </div>
+      <div class="servicio-card">
+        <svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="11" ry="6"/><path d="M9 20V26C9 29.3 13.9 32 20 32C26.1 32 31 29.3 31 26V20" stroke-linecap="round"/><path d="M12 14V10M28 14V10" stroke-linecap="round"/></svg>
+        <h3>Comedores</h3>
+        <p>La mesa como centro de la casa: circulación, luz y un lugar para cada silla.</p>
+      </div>
+      <div class="servicio-card">
+        <svg viewBox="0 0 40 40"><path d="M8 20H30V26C30 30 27 33 20 33C13 33 10 30 10 26" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 20V10C12 8 14 7 15 8.5" stroke-linecap="round"/><path d="M6 20H32" stroke-linecap="round"/></svg>
+        <h3>Baños</h3>
+        <p>Ventilación, agua caliente e instalaciones bien resueltas antes que cualquier acabado bonito.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="enfoque">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Materia y altura</div>
+        <h2>Construir para el clima de la sierra</h2>
+      </div>
+    </div>
+    <div class="enfoque-grid reveal">
+      <div class="enfoque-text">
+        <p>A 2 388 metros, las noches enfrían rápido y el sol pega fuerte de día. Diseñar aquí es distinto a diseñar en la costa.</p>
+        <p>Orientamos los ambientes según el sol de la mañana, cuidamos el espesor de los muros para guardar el calor del día, y elegimos materiales de la zona antes de traer algo de afuera: tierra, madera de la zona y piedra de cantera cercana.</p>
+        <p>Eso no quita modernidad al proyecto: una casa de ciudad bien resuelta y una casa de campo con criterio comparten la misma atención al detalle, solo que responden a terrenos distintos.</p>
+      </div>
+      <div class="materiales">
+        <div class="material">
+          <svg class="swatch" viewBox="0 0 200 64"><rect width="200" height="64" fill="#C2895A"/></svg>
+          <h4>Tierra / adobe</h4>
+          <p>Muros gruesos, inercia térmica para las noches frías.</p>
+        </div>
+        <div class="material">
+          <svg class="swatch" viewBox="0 0 200 64"><rect width="200" height="64" fill="#8B4226"/></svg>
+          <h4>Teja</h4>
+          <p>Cubiertas que ya conocen la lluvia de la sierra.</p>
+        </div>
+        <div class="material">
+          <svg class="swatch" viewBox="0 0 200 64"><rect width="200" height="64" fill="#6B6459"/></svg>
+          <h4>Piedra de cantera</h4>
+          <p>Zócalos y muros bajos, resistentes a la humedad del suelo.</p>
+        </div>
+        <div class="material">
+          <svg class="swatch" viewBox="0 0 200 64"><rect width="200" height="64" fill="#3F5039"/></svg>
+          <h4>Madera local</h4>
+          <p>Carpintería y estructuras de bosques cercanos a Chota.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proyectos">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Obras en la sierra y en la ciudad</div>
+        <h2>Proyectos</h2>
+      </div>
+      <p>Espacio reservado para tus fotos de obra. Reemplaza cada tarjeta con las imágenes reales de cada proyecto.</p>
+    </div>
+    <div class="proyectos-grid reveal">
+      <div class="proyecto-card">
+        <div class="proyecto-visual">
+          <svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg">
+            <path d="M-10,150 C60,130 120,165 150,145 C190,120 230,155 310,135" fill="none" stroke="#8B4226" stroke-width="1.2"/>
+            <path d="M-10,120 C60,95 130,135 150,110 C200,80 240,120 310,95" fill="none" stroke="#6B6459" stroke-width="1.2"/>
+            <path d="M-10,90 C70,60 120,100 150,75 C200,45 250,85 310,60" fill="none" stroke="#3F5039" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="proyecto-info">
+          <div class="tag">Casa de campo</div>
+          <h3>Vivienda rural</h3>
+          <p>Muros de adobe, cubierta de teja, orientada al sol de la mañana.</p>
+        </div>
+      </div>
+      <div class="proyecto-card">
+        <div class="proyecto-visual">
+          <svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg">
+            <path d="M-10,140 C60,160 120,110 150,130 C190,150 230,105 310,125" fill="none" stroke="#8B4226" stroke-width="1.2"/>
+            <path d="M-10,110 C60,130 130,90 150,105 C200,120 240,80 310,100" fill="none" stroke="#6B6459" stroke-width="1.2"/>
+            <path d="M-10,80 C70,100 120,65 150,80 C200,95 250,60 310,75" fill="none" stroke="#3F5039" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="proyecto-info">
+          <div class="tag">Casa de ciudad</div>
+          <h3>Vivienda entre medianeras</h3>
+          <p>Lote angosto en el centro de Chota, resuelto con patio interior de luz.</p>
+        </div>
+      </div>
+      <div class="proyecto-card">
+        <div class="proyecto-visual">
+          <svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg">
+            <path d="M-10,130 C50,150 130,120 150,140 C200,160 250,115 310,135" fill="none" stroke="#8B4226" stroke-width="1.2"/>
+            <path d="M-10,100 C50,120 140,90 150,110 C210,130 260,85 310,105" fill="none" stroke="#6B6459" stroke-width="1.2"/>
+            <path d="M-10,70 C60,90 130,60 150,80 C210,100 260,55 310,75" fill="none" stroke="#3F5039" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="proyecto-info">
+          <div class="tag">Local comercial</div>
+          <h3>Tienda en Jr. Comercio</h3>
+          <p>Fachada y mostrador pensados para el flujo de la plaza principal.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="estudio">
+  <div class="wrap">
+    <div class="sobre-grid reveal">
+      <div>
+        <div class="eyebrow">El estudio</div>
+        <h2>Un equipo que conoce el terreno donde construye</h2>
+        <p>ATELIER nace en Chota, en la meseta de Acunta, y trabaja principalmente con familias y negocios de la provincia.</p>
+        <p>Cada proyecto pasa por las mismas manos desde el primer plano hasta la última llave instalada en el baño: sin intermediarios ni tercerizar el criterio.</p>
+        <div class="stat-row">
+          <div class="stat"><b>2 388</b><span>Metros de altitud</span></div>
+          <div class="stat"><b>7</b><span>Tipos de ambiente</span></div>
+          <div class="stat"><b>1</b><span>Provincia, Chota</span></div>
+        </div>
+      </div>
+      <div class="hero-side" style="border-left:1px solid var(--linea);padding-left:28px;">
+        <p><strong>Campo o ciudad.</strong> Diseñamos igual de cerca una vivienda rural en las afueras que una casa entre medianeras en el centro.</p>
+        <p><strong>Un solo interlocutor.</strong> Coordinamos planos, estructura, instalaciones y acabados desde una sola oficina en Chota.</p>
+        <p><strong>Escala real.</strong> Presupuestos pensados para la construcción de la sierra, no importados de la costa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="wrap">
+    <div class="contacto-grid reveal">
+      <div class="contacto-info">
+        <div class="eyebrow">Coordenadas -6.561, -78.651</div>
+        <h2>Conversemos sobre tu proyecto</h2>
+        <p>Cuéntanos si es una casa de campo, una casa de ciudad, un local o solo un ambiente por renovar. Respondemos en un día útil.</p>
+        <div class="coords">
+          Chota, Cajamarca, Perú<br>
+          Atención: lunes a sábado
+        </div>
+      </div>
+      <form>
+        <div class="field">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" type="text" placeholder="¿Cómo te llamas?">
+        </div>
+        <div class="field">
+          <label for="contacto-medio">Correo o WhatsApp</label>
+          <input id="contacto-medio" type="text" placeholder="Para responderte">
+        </div>
+        <div class="field">
+          <label for="tipo">Tipo de proyecto</label>
+          <select id="tipo">
+            <option>Casa de campo</option>
+            <option>Casa de ciudad</option>
+            <option>Tienda o local</option>
+            <option>Un ambiente puntual (habitación, sala, comedor, baño)</option>
+            <option>Aún no lo sé</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mensaje">Cuéntanos brevemente</label>
+          <textarea id="mensaje" placeholder="Ubicación, tamaño aproximado, plazos..."></textarea>
+        </div>
+        <button class="submit-btn" type="submit">Enviar mensaje</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>ATELIER — Arquitectura &amp; interiores</span>
+    <span>Chota, Cajamarca, Perú</span>
+  </div>
+</footer>
+
+<script>
+  const items = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:0.12});
+    items.forEach(i=>io.observe(i));
+  } else {
+    items.forEach(i=>i.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
